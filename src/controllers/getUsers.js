@@ -1,16 +1,13 @@
-import url from "url"
-
 import model from "../model/index.js"
 import { apiErrors } from "./consts.js"
 
-export async function getUser(req, res) {
-    const {query} = url.parse(req.url, true)
+export async function getUsers(req, res) {
 
-    const user = await model.getUserByIdAsync(parseInt(query.id))
+    const users = await model.getUsersAsync()
 
-    if (user) {
+    if (users) {
         res.writeHead(200, {"Content-Type": "application/json"})
-        res.write(JSON.stringify(user))
+        res.write(JSON.stringify(users))
         res.end()
 
         return

@@ -8,7 +8,7 @@ class UsersStorage {
   init() {
     this.db
     .prepare(`create table if not exists users (
-            id int primary key,
+            id integer primary key autoincrement,
             username varchar(255) not null
         );`)
     .run()
@@ -37,7 +37,7 @@ class UsersStorage {
   getUserById = (id) => {
     return this.db
     .prepare(`select * from users where id = ?`)
-    .get(id)
+    .all(id)
   }
 
   updateUser = (updateBody) => {
@@ -50,6 +50,7 @@ class UsersStorage {
     return this.db
     .prepare("delete from users where id = ?")
     .run(id)
+
   }
 
   createUser = (username) => {
