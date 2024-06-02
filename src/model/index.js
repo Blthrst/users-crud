@@ -2,13 +2,13 @@ import Database from "better-sqlite3";
 
 class UsersStorage {
   constructor(path) {
-    this.__db = new Database(path);
+    this.db = new Database(path);
   }
 
   init() {
-    this.__db
+    this.db
     .prepare(`create table if not exists users (
-            id int primary key not null,
+            id int primary key,
             username varchar(255) not null
         );`)
     .run()
@@ -16,55 +16,66 @@ class UsersStorage {
     return this
   }
 
-  async asyncExecution(method) {
+  async asyncExecution(method, ...params) {
     return new Promise((res, rej) => {
         try {
-            const result = method()
-            res(result)
+            if (params) res(method(...params))
+
+            res(method())
         } catch (err) {
             rej(err)
         }
     })
   }
 
-  getUsers() {
-    return this.__db
+  getUsers = () => {
+    return this.db
     .prepare(`select * from users`)
     .all()
   }
 
-  getUserById(id) {
-    return this.__db
+  getUserById = (id) => {
+    return this.db
     .prepare(`select * from users where id = ?`)
     .get(id)
   }
 
-  updateUser(updateBody) {
-    return this.__db
+  updateUser = (updateBody) => {
+    return this.db
     .prepare("update users set id = @newId, username = @username where id = @id")
     .run(updateBody)
   }
 
-  deleteUser(id) {
-    return this.__db
+  deleteUser = (id) => {
+    return this.db
     .prepare("delete from users where id = ?")
     .run(id)
+  }
+
+  createUser = (username) => {
+    return this.db
+    .prepare("insert into users (username) values (?)")
+    .run(username)
   }
 
   async getUsersAsync() {
     return this.asyncExecution(this.getUsers)
   }
 
-  async getUserByIdAsync() {
-    return this.asyncExecution(this.getUserById)
+  async getUserByIdAsync(id) {
+    return this.asyncExecution(this.getUserById, id)
   }
 
   async updateUserAsync(updateBody) {
-    return this.asyncExecution(this.updateUser(updateBody))
+    return this.asyncExecution(this.updateUser, updateBody)
   }
 
   async deleteUserAsync(id) {
-    return this.asyncExecution(this.deleteUser(id))
+    return this.asyncExecution(this.deleteUser, id)
+  }
+
+  async createUserAsync(username) {
+    return this.asyncExecution(this.createUser, username)
   }
  
 }
