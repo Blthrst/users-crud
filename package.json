@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "nodemon": "^3.1.2",
+    "yarn": "^1.22.22"
+  },
+  "type": "module",
+  "name": "users-crud",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
