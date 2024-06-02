@@ -1,0 +1,3 @@
+function getUser(req, res) {
+    
+}
