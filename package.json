@@ -11,7 +11,9 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev:adv": "nodemon src/crud-advanced/index.js",
+    "dev:beg": "nodemon src/crud-beginner/index.js"
+
   },
   "keywords": [],
   "author": "",

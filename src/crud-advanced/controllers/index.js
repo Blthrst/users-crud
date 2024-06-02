@@ -38,7 +38,7 @@ async function router(req, res) {
                 await deleteUser(req, res)
                 return
             }
-        }
+        }; break;
     }
 }
 
